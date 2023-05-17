@@ -1,0 +1,14 @@
+---
+- name: Obtener versión de Windows
+  hosts: tu_host_windows
+  gather_facts: yes
+  tasks:
+    - name: Ejecutar comando de versión de Windows
+      win_shell: |
+        $version = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name "ReleaseId").ReleaseId
+        Write-Host "La versión de Windows es: $version"
+      register: version_output
+
+    - name: Mostrar versión de Windows
+      debug:
+        var: version_output.stdout_lines
